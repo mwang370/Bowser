@@ -1,0 +1,23 @@
+{
+    "name": "Bowser",
+    "description": "An extension that tracks browsing behavior",
+    "version": "1.0",
+    "manifest_version": 2,
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": "bowser_icon.png"
+    },
+    "background": {
+        "scripts": ["utils.js", "background.js"]
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["utils.js", "jquery-3.2.1.min.js", "click_tracker.js"]
+        }
+    ],
+    "permissions": [
+        "activeTab",
+        "storage"
+    ]
+}

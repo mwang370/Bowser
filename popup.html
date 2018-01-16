@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Bowser Browsing Tracker</title>
+    <style type="text/css">
+      body {
+        margin: 10px;
+        white-space: nowrap;
+      }
+
+      h1 {
+        font-size: 15px;
+      }
+
+      #container {
+        align-items: center;
+        justify-content: space-between;
+      }
+    </style>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="popup.js"></script>
+  </head>
+
+  <body>
+    <h1>Bowswer Activity Tracker</h1>
+    <div id="container">
+      <p># of clicks for page: </p><p id="p_num_clicks_page"></p>
+      <p># of clicks total: </p><p id="p_num_clicks_total"></p>
+    </div>
+  </body>
+</html>
