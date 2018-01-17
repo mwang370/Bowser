@@ -1,6 +1,6 @@
 {
     "name": "Bowser",
-    "description": "An extension that tracks browsing behavior",
+    "description": "A chrome extension that tracks your browsing behavior",
     "version": "1.0",
     "manifest_version": 2,
     "browser_action": {
@@ -13,11 +13,12 @@
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["js/utils.js", "js/jquery-3.2.1.min.js", "js/click_tracker.js"]
+            "js": ["js/utils.js", "js/jquery-3.2.1.min.js", "js/tracker.js"]
         }
     ],
     "permissions": [
-        "activeTab",
+        "tabs",
         "storage"
-    ]
+    ],
+    "icons": {"128": "bowser_icon.png"}
 }
