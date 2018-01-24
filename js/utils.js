@@ -1,10 +1,16 @@
 const TOTAL_URL = "total";
+
 const CLICK_MSG = "click";
 const CLICK_ACK = "click received";
 const CLICK_ATTR = "# of clicks";
+
 const KEY_PRESS_MSG = "key press";
 const KEY_PRESS_ACK = "key press received";
 const KEY_PRESS_ATTR = "# of key presses";
+
+const SCROLL_MSG = "scroll";
+const SCROLL_ACK = "scroll received";
+const SCROLL_ATTR = "# of scrolls";
 
 function uniquify(url, attrName) {
   return url + '*' + attrName;

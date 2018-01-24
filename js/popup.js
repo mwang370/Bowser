@@ -12,27 +12,39 @@ function getCurrentTabUrl(callback) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  $('#b_clear').on('click', null, function() {
+    console.log('hi');
+    chrome.storage.sync.clear();
+  });
+
   getCurrentTabUrl((url) => {
-    var pNumClicksPage = document.getElementById('p_num_clicks_page');
-    var pNumClicksTotal = document.getElementById('p_num_clicks_total');
     getAttr(url, CLICK_ATTR, (val) => {
       console.log(val);
-      $('#p_num_clicks_page').text(val);
+      $('#p_nc_page').text(val);
     });
     getAttr(TOTAL_URL, CLICK_ATTR, (val) => {
       console.log(val);
-      $('#p_num_clicks_total').text(val);
+      $('#p_nc_total').text(val);
     });
 
     getAttr(url, KEY_PRESS_ATTR, (val) => {
       console.log(val);
-      $('#p_num_key_presses_page').text(val);
+      $('#p_nk_page').text(val);
     });
 
     getAttr(TOTAL_URL, KEY_PRESS_ATTR, (val) => {
       console.log(val);
-      $('#p_num_key_presses_total').text(val);
+      $('#p_nk_total').text(val);
     });
 
+    getAttr(url, SCROLL_ATTR, (val) => {
+      console.log(val);
+      $('#p_ns_page').text(val);
+    });
+
+    getAttr(TOTAL_URL, SCROLL_ATTR, (val) => {
+      console.log(val);
+      $('#p_ns_total').text(val);
+    });
   });
 });
