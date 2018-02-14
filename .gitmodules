@@ -1,3 +1,3 @@
-[submodule "bowser_server"]
-    path = bowser_server
-    url = https://git.heroku.com/floating-brushlands-15183.git
+[submodule "floating-brushlands-15183"]
+	path = floating-brushlands-15183
+	url = https://git.heroku.com/floating-brushlands-15183.git
