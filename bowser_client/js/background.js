@@ -1,5 +1,4 @@
-var outbox = new ReconnectingWebSocket("ws://floating-brushlands-15183.herokuapp.com/submit")
-
+var outbox = new ReconnectingWebSocket("ws://blooming-garden-58768.herokuapp.com/submit")
 function getCurrentTabUrl(callback) {
   var queryInfo = {
     active: true,
