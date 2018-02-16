@@ -19,7 +19,9 @@
     "permissions": [
         "tabs",
         "storage",
-        "webNavigation"
+        "webNavigation",
+        "management"
+
     ],
     "icons": {"128": "bowser_icon.png"}
 }

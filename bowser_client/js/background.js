@@ -1,5 +1,6 @@
 var outbox = new ReconnectingWebSocket("ws://blooming-garden-58768.herokuapp.com/submit")
-function getCurrentTabUrl(callback) {
+
+function getCurrentTab(callback) {
   var queryInfo = {
     active: true,
     currentWindow: true
@@ -8,32 +9,52 @@ function getCurrentTabUrl(callback) {
     var tab = tabs[0];
     var url = tab.url;
     console.assert(typeof url == 'string', 'tab.url should be a string');
-    callback(url);
+    callback(tab);
   });
 }
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
+  var action = request.action;
+  var timestamp = request.timestamp;
+  var target = request.target;
   if (request.action === CLICK_MSG) {
-    getCurrentTabUrl((url) => {
-      action = request.action;
+    getCurrentTab((tab) => {
+      var url = tab.url;
+      var tabId = tab.id;
       console.log("received click message on url: " + url);
-      outbox.send(JSON.stringify({url: url, action:action}));
+      outbox.send(JSON.stringify({
+        url: url,
+        action: action,
+        timestamp: timestamp,
+        tabId: tabId,
+        target: target
+      }));
       incrementAttr(url, CLICK_ATTR);
       incrementAttr(TOTAL_URL, CLICK_ATTR);
       sendResponse({ack: CLICK_ACK});
     });
-  } else if (request.action === KEY_PRESS_MSG) {
-    getCurrentTabUrl((url) => {
-      console.log("received key press message on url: " + url);
-      incrementAttr(url, KEY_PRESS_ATTR);
-      incrementAttr(TOTAL_URL, KEY_PRESS_ATTR);
-      sendResponse({ack: KEY_PRESS_ACK});
+  } else if (request.action === TYPING_MSG) {
+    getCurrentTab((tab) => {
+      var url = tab.url;
+      var tabId = tab.id;
+      console.log("received typing message on url: " + url);
+      outbox.send(JSON.stringify({
+        url: url,
+        action: action,
+        timestamp: timestamp,
+        tabId: tabId,
+        target: target
+      }));
+      incrementAttr(url, TYPING_ATTR);
+      incrementAttr(TOTAL_URL, TYPING_ATTR);
+      sendResponse({ack: TYPING_ACK});
     })
   } else if (request.action === SCROLL_MSG) {
-    getCurrentTabUrl((url) => {
+    getCurrentTab((tab) => {
+      var url = tab.url;
       console.log("received scroll message with data "
-        + request.data + " on url: " + url);
+        + request.newY + " on url: " + url);
       incrementAttr(url, SCROLL_ATTR);
       incrementAttr(TOTAL_URL, SCROLL_ATTR);
       sendResponse({ack: SCROLL_ACK});

@@ -4,9 +4,9 @@ const CLICK_MSG = "click";
 const CLICK_ACK = "click received";
 const CLICK_ATTR = "# of clicks";
 
-const KEY_PRESS_MSG = "key press";
-const KEY_PRESS_ACK = "key press received";
-const KEY_PRESS_ATTR = "# of key presses";
+const TYPING_MSG = "typing";
+const TYPING_ACK = "typing received";
+const TYPING_ATTR = "# of typinges";
 
 const SCROLL_MSG = "scroll";
 const SCROLL_ACK = "scroll received";

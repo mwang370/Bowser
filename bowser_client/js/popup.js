@@ -27,12 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
       $('#p_nc_total').text(val);
     });
 
-    getAttr(url, KEY_PRESS_ATTR, (val) => {
+    getAttr(url, TYPING_ATTR, (val) => {
       console.log(val);
       $('#p_nk_page').text(val);
     });
 
-    getAttr(TOTAL_URL, KEY_PRESS_ATTR, (val) => {
+    getAttr(TOTAL_URL, TYPING_ATTR, (val) => {
       console.log(val);
       $('#p_nk_total').text(val);
     });
