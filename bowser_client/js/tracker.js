@@ -15,7 +15,7 @@ $(document).on('click', null, function(event) {
 $(document).keypress(function(event){
   console.log(event.target);
   chrome.runtime.sendMessage({
-    action: TYPING_MSG,
+    action: TYPE_MSG,
     target: event.target.outerHTML,
     timestamp: Date.now()
   }, function(response) {
@@ -29,7 +29,7 @@ $(window).on('scroll', null, function(event) {
     window.requestAnimationFrame(function() {
       chrome.runtime.sendMessage({
         action: SCROLL_MSG,
-        newY: lastKnownScroll,
+        yPos: lastKnownScroll,
         timestamp: Date.now()
       },
         function (response) {
