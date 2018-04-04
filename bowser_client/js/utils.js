@@ -14,9 +14,23 @@ const SCROLL_ATTR = "# of scrolls";
 
 const NEW_TAB_MSG = "newTab";
 const URL_CHANGE_MSG = "urlChange";
-const BACK_BUTTON_MESSAGE = "backButton";
-const OMNIBOX_MESSAGE = "omnibox";
+const BACK_BUTTON_MSG = "backButton";
+const OMNIBOX_MSG = "omnibox";
 const TAB_CHANGE_MSG = "tabChange";
+const AWAKE_MSG = "awake";
+
+const AWAKE_TIMER = 5;
+
+function dec2hex (dec) {
+  return ('0' + dec.toString(16)).substr(-2)
+}
+
+// generateId :: Integer -> String
+function generateId (len) {
+  var arr = new Uint8Array((len || 40) / 2)
+  window.crypto.getRandomValues(arr)
+  return Array.from(arr, dec2hex).join('')
+}
 
 function getLocalIPs(callback) {
     var ips = [];

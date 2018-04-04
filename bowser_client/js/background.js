@@ -1,9 +1,5 @@
 var outbox = new ReconnectingWebSocket("ws://blooming-garden-58768.herokuapp.com/submit")
-var ip;
-
-getLocalIPs(function(ips) { // <!-- ips is an array of local IP addresses.
-    ip = ips.join('\n ');
-});
+var uid = "michael"
 
 function getCurrentTab(callback) {
   var queryInfo = {
@@ -18,11 +14,41 @@ function getCurrentTab(callback) {
   });
 }
 
+setInterval(function() {
+  getCurrentTab((tab) => {
+    var url = tab.url;
+    var tabId = tab.id;
+    var action = AWAKE_MSG;
+    var timestamp = Date.now();
+    outbox.send(JSON.stringify({
+      url: url,
+      action: action,
+      timestamp: timestamp,
+      tabId: tabId,
+      uid: uid
+    }));
+  });
+}, AWAKE_TIMER * 60 * 1000);
+
+// chrome.storage.local.get('uid', function(result){
+//   console.log(result);
+//   console.log(result.uid);
+//   if (typeof result.uid === 'undefined') {
+//     var key = 'uid';
+//     var obj = {};
+//     obj[key] = uid;
+//     chrome.storage.local.set(obj);
+//   } else {
+//     uid = result.uid;
+//     console.log("uid already set: " + result.uid);
+//   }
+// });
+
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
   var action = request.action;
   var timestamp = request.timestamp;
-  var target = request.target;
+  var data = request.data;
   if (request.action === CLICK_MSG) {
     getCurrentTab((tab) => {
       var url = tab.url;
@@ -33,11 +59,9 @@ chrome.runtime.onMessage.addListener(
         action: action,
         timestamp: timestamp,
         tabId: tabId,
-        target: target,
-        ip: ip
+        data: data,
+        uid: uid
       }));
-      incrementAttr(url, CLICK_ATTR);
-      incrementAttr(TOTAL_URL, CLICK_ATTR);
       sendResponse({ack: CLICK_ACK});
     });
   } else if (request.action === TYPE_MSG) {
@@ -50,18 +74,16 @@ chrome.runtime.onMessage.addListener(
         action: action,
         timestamp: timestamp,
         tabId: tabId,
-        target: target,
-        ip: ip
+        data: data,
+        uid: uid
       }));
-      incrementAttr(url, TYPE_ATTR);
-      incrementAttr(TOTAL_URL, TYPE_ATTR);
       sendResponse({ack: TYPE_ACK});
     })
   } else if (request.action === SCROLL_MSG) {
     getCurrentTab((tab) => {
       var url = tab.url;
       var tabId = tab.id;
-      var yPos = request.yPos
+      var data = request.data
       console.log("received scroll message with data "
         + request.newY + " on url: " + url);
       outbox.send(JSON.stringify({
@@ -69,11 +91,9 @@ chrome.runtime.onMessage.addListener(
         timestamp: timestamp,
         url: url,
         tabId: tabId,
-        yPos: yPos,
-        ip: ip
+        data: data,
+        uid: uid
       }))
-      incrementAttr(url, SCROLL_ATTR);
-      incrementAttr(TOTAL_URL, SCROLL_ATTR);
       sendResponse({ack: SCROLL_ACK});
     })
   }
@@ -89,7 +109,7 @@ chrome.tabs.onCreated.addListener(function(tab) {
     action: action,
     timestamp: timestamp,
     tabId: tabId,
-    ip: ip
+    uid: uid
   }))
 });
 
@@ -104,7 +124,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
       timestamp: timestamp,
       tabId: tabId,
       url: url,
-      ip: ip
+      uid: uid
     }))
   }
 });
@@ -117,7 +137,7 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
     action: action,
     timestamp: timestamp,
     tabId: tabId,
-    ip: ip
+    uid: uid
   }))
 });
 
@@ -127,22 +147,22 @@ chrome.webNavigation.onCommitted.addListener(function(details) {
   getCurrentTab((tab) => {
     if (details.transitionQualifiers.includes("forward_back")) {
       console.log("back/forward button pressed");
-      var action = BACK_BUTTON_MESSAGE;
+      var action = BACK_BUTTON_MSG;
       var tabId = tab.id;
       outbox.send(JSON.stringify({
         action: action,
         timestamp: timestamp,
         tabId: tabId,
-        ip: ip
+        uid: uid
       }))
     } else if (details.transitionQualifiers.includes("from_address_bar")){
-      var action = OMNIBOX_MESSAGE;
+      var action = OMNIBOX_MSG;
       var tabId = tab.id;
       outbox.send(JSON.stringify({
         action: action,
         timestamp: timestamp,
         tabId: tabId,
-        ip: ip
+        uid: uid
       }))
       console.log("typed in address bar");
     }
