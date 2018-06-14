@@ -1,9 +1,8 @@
 // secret mode on
-var secretMode = 1;
-
+var secretMode = 1; // how much of the div do we show? 
 var lastKnownScroll = 0;
 var ticking = false;
-var scrollRateThrottle = 20;
+var scrollRateThrottle = 1; // no need to throttle now that we combine all them?
 var scrollRateCounter = 0;
 
 function removeAllTextNodes(node) {

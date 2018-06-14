@@ -1,11 +1,11 @@
 {
-    "name": "Bowser",
+    "name": "Browsing Extension",
     "description": "A chrome extension that tracks your browsing behavior",
     "version": "1.0",
     "manifest_version": 2,
     "browser_action": {
         "default_popup": "popup.html",
-        "default_icon": "bowser_icon.png"
+        "default_icon": "cursor.png"
     },
     "background": {
         "scripts": ["js/utils.js", "js/reconnecting-websocket.min.js", "js/background.js"]
@@ -23,5 +23,5 @@
         "management"
 
     ],
-    "icons": {"128": "bowser_icon.png"}
+    "icons": {"512": "cursor.png"}
 }

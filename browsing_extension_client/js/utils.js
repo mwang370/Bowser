@@ -17,6 +17,7 @@ const URL_CHANGE_MSG = "urlChange";
 const BACK_BUTTON_MSG = "backButton";
 const OMNIBOX_MSG = "omnibox";
 const TAB_CHANGE_MSG = "tabChange";
+const NULL_ACTION_MSG = "null";
 const AWAKE_MSG = "awake";
 
 const AWAKE_TIMER = 5;
