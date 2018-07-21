@@ -1,5 +1,5 @@
 var outbox = new ReconnectingWebSocket("ws://blooming-garden-58768.herokuapp.com/submit");
-var uid = "michael";
+var uid = "<USER ID GOES HERE>";
 var lastActionType = NULL_ACTION_MSG;
 var actionBuilder = {};
 
@@ -172,7 +172,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     var action = URL_CHANGE_MSG;
     var timestamp = Date.now();
     var url = changeInfo.url;
-    var domain = tab.domain;
+    var domain = getDomain(url);
     let mail = {
       action: action,
       timestamp: timestamp,
